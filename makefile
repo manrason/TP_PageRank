@@ -1,11 +1,11 @@
 CC=gcc
-CFLAGS= -W -Wall -O
-EXEC=main
+CFLAGS= -W -Wall -o
+EXEC=PageRank
 
-main: main.c
-	$(CC) -lm -o main main.c
+PageRank: PageRank.c
+	$(CC) ${CFLAGS} PageRank PageRank.c -lm
 
 clean:
 	rm -rf $(EXEC)
 
-all: main
+all: PageRank

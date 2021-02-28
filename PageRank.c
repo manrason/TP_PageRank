@@ -1,12 +1,43 @@
 #include "PageRank.h"
 
+
+
+
+/*************************** Obtaining graph of a social network  **************************/
+
+void read_file(int*** graph, int* length, char file_name[FILELENGTH]) {
+	FILE* file; 
+	file = fopen(file_name, "r");
+	if(file) {
+		fscanf(file, "%d", length);
+		*graph = (int**) malloc((*length + 1) * sizeof(int*));
+		for(int i = 0; i < (*length) + 1; i++) {
+			(*graph)[i] = (int*) malloc((*length + 1) * sizeof(int));
+            if(i == 0) { 
+                (*graph)[0][0] = *length;
+                for(int j = 1; j < (*length) + 1; j++) {
+                    (*graph)[0][j] = UNDEFINED; 
+                }
+            } else {
+                for(int j = 0; j < (*length) + 1; j++) {
+                    fscanf(file, "%d", &(*graph)[i][j]);
+                }
+            }
+		}
+		fclose(file);
+	} else {
+		exit(1);
+	}
+}
+
+
 /********************** Creating the adjacency matrix from the graph  ************************/
 void adjacency_matrix_from_graph(int*** adjacency_matrix, int** graph, int length) {
     init_matrix_int(adjacency_matrix, length, true);
     for(int i = 0; i < length; i++) {
         for(int j = 0; j < length; j++) {
             int target = graph[i+1][j+1];
-            if(target != UNDIFINED) {
+            if(target != UNDEFINED) {
                 (*adjacency_matrix)[i][target] = 1;
             }
         }
@@ -19,7 +50,7 @@ void init_vector(double** vector, int length, bool filled_w_zero) {
     *vector = (double*) malloc(length * sizeof(double));
     if(filled_w_zero) {
         for(int i = 0; i < length; i++) {
-            (*vector)[i] = 0;
+            (*vector)[i] = 0.0;
         }
     }
 }    
@@ -30,7 +61,7 @@ void init_matrix_double(double*** matrix, int length, bool filled_w_zero) {
         (*matrix)[i] = (double*) malloc(length * sizeof(double));
         if(filled_w_zero) {
             for(int j = 0; j < length; j++) {
-                (*matrix)[i][j] = 0;
+                (*matrix)[i][j] = 0.0;
             }
         }
     }
@@ -47,9 +78,12 @@ void init_matrix_int(int*** matrix, int length, bool filled_w_zero) {
         }
     }
 }
+
+
+
 /*************************** Filling and normalizing  **************************/
 void fill_init_vector(int length, double** vector) {
-    initialiseVecteur(vector, length, false);
+    init_vector(vector, length, false);
     *vector = (double*) malloc(length * sizeof(double));
     for(int i = 0; i < length; i++) {
         char buffer[50];
@@ -106,7 +140,6 @@ void pageRank_loop(int** adjacency_matrix, double* initial_vector, int length, d
     init_vector(&old_vector, length, true);
 
     while(normalize_vector(current_vector, old_vector, length) > epsilon) {
-        printf("Numero d'iteration : %d\n", k);
         for(int i = 0; i < length; i++) {
             old_vector[i] = current_vector[i];
         }
@@ -116,11 +149,43 @@ void pageRank_loop(int** adjacency_matrix, double* initial_vector, int length, d
     print_vector(current_vector, length);
 }
 
+/*************Printing result************/
+//Showing result
 void print_vector(double* vector, int length) {
     printf("\n");
-    printf("VECTEUR\n");
     for(int i = 0; i < length; i++) {
         printf("%.10f  ", vector[i]);
     }
-    printf("\n\n\n");
 }
+
+
+/***********Freeing vector and matrix*******/
+void free_matrix(double** matrix){
+    free(matrix);
+}
+
+void free_vector(double* vector){
+    free(vector);
+}
+
+
+
+int main(int argc, char* argv[]) {
+    int length = 0;
+    double epsilon = 0.0001,alpha = 0.8;
+    char file[FILELENGTH] = "Wiki-Vote.txt";
+    int** graph;
+    double* vector;
+    int** adjacency_matrix;
+	read_file(&graph, &length, file);
+	adjacency_matrix_from_graph(&adjacency_matrix, graph, length);
+    fill_init_vector(length, &vector);
+    printf("test");
+    pageRank_loop(adjacency_matrix, vector, length, alpha, epsilon);
+    printf("after test");
+    free(adjacency_matrix);
+    free(vector);
+    return 0;
+}
+
+

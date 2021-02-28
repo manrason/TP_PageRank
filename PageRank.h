@@ -7,7 +7,9 @@
 #include <stdbool.h>
 #include <string.h>
 #include <math.h>
-#include "read_file.h"
+
+#define FILELENGTH 256
+#define UNDEFINED -1
 
 
 void adjacency_matrix_from_graph(int*** adjacency_matrix, int** graph, int length);
