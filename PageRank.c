@@ -113,4 +113,14 @@ void pageRank_loop(int** adjacency_matrix, double* initial_vector, int length, d
         matrix_x_vector(A, current_vector, length);
         k++;
     }
+    print_vector(current_vector, length);
+}
+
+void print_vector(double* vector, int length) {
+    printf("\n");
+    printf("VECTEUR\n");
+    for(int i = 0; i < length; i++) {
+        printf("%.10f  ", vector[i]);
+    }
+    printf("\n\n\n");
 }

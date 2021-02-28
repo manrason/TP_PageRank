@@ -18,5 +18,6 @@ void fill_init_vector(int length, double** vector);
 double normalize_vector(double* current_vector, double* old_vector, int length);
 void matrix_x_vector(double** matrix, double* vector, int length);
 void pageRank_loop(int** adjacency_matrix, double* initial_vector, int length, double alpha, double epsilon);
+void print_vector(double* vector, int length);
 
 #endif
