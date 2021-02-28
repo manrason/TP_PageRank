@@ -13,8 +13,6 @@ int main(int argc, char* argv[]) {
     int** graph;
     double* vector;
     int** adjacency_matrix;
-
-
     while((opt = getopt(argc, argv, "f:a:e:")) != -1) {
         switch(opt) {
             case 'f':
@@ -34,20 +32,9 @@ int main(int argc, char* argv[]) {
                 break;
         }
     }
-
-    printf("Lecture du graph depuis le fichier %s et debut d'execution avec alpha = %.10f et epsilon = %.10f..\n", file, alpha, epsilon);
 	read_file(&graph, &length, file);
-	//afficheMatriceEntiers(graph, length + 1);
-	
-	printf("Creation de la matrice d'adjacence..");
 	adjacency_matrix_from_graph(&adjacency_matrix, graph, length);
-    //afficheMatriceEntiers(adjacency_matrix, length);
-
-    printf("Merci d'entrer les valeurs initiales : \n");
     fill_init_vector(length, &vector);
-    //afficheVecteur(vector, length);
-
-    printf("Execution de l'algorithme page rank ameliore");
     pageRank_loop(adjacency_matrix, vector, length, alpha, epsilon);
 
     return 0;

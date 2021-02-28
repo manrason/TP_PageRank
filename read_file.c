@@ -1,5 +1,6 @@
-
 #include "read_file.h"
+
+/*************************** Obtaining graph of a social network  **************************/
 
 void read_file(int*** graph, int* length, char file[FILELENGTH]) {
 	FILE* file; 

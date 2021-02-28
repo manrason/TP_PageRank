@@ -1,6 +1,6 @@
 #include "PageRank.h"
 
-/*************************** Getting matrix A  **************************/
+/********************** Creating the adjacency matrix from the graph  ************************/
 void adjacency_matrix_from_graph(int*** adjacency_matrix, int** graph, int length) {
     init_matrix_int(adjacency_matrix, length, true);
     for(int i = 0; i < length; i++) {
