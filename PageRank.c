@@ -6,7 +6,7 @@ void adjacency_matrix_from_graph(int*** adjacency_matrix, int** graph, int lengt
     for(int i = 0; i < length; i++) {
         for(int j = 0; j < length; j++) {
             int target = graph[i+1][j+1];
-            if(target != INDEFINI) {
+            if(target != UNDIFINED) {
                 (*adjacency_matrix)[i][target] = 1;
             }
         }
