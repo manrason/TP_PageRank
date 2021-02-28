@@ -11,7 +11,7 @@
 #define FILELENGTH 256
 #define UNDEFINED -1
 
-
+void read_file(int*** graph, int* length, char file_name[FILELENGTH]);
 void adjacency_matrix_from_graph(int*** adjacency_matrix, int** graph, int length);
 void init_vector(double** vector, int length, bool filled_w_zero);
 void init_matrix_double(double*** matrix, int length, bool filled_w_zero);

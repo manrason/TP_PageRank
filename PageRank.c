@@ -171,31 +171,12 @@ void free_vector(double* vector){
 
 
 int main(int argc, char* argv[]) {
-    int length = 0;
+    int opt,length = 0;
     double epsilon = 0.0001,alpha = 0.8;
     char file_name[FILELENGTH] = "Wiki-Vote.txt";
     int** graph;
     double* vector;
     int** adjacency_matrix;
-    while((opt = getopt(argc, argv, "f:a:e:")) != -1) {
-        switch(opt) {
-            case 'f':
-                strcpy(nomfichier, optarg);
-                printf("Mise en place du nomfichier à %s\n", file_name);
-                break;
-            case 'a':
-                alpha = atof(optarg);
-                printf("Mise en place de alpha à %.10f\n", alpha);
-                break;
-            case 'e':
-                epsilon = atof(optarg);
-                printf("Mise en place de epsilon à %.10f\n", epsilon);
-                break;
-            case '?':
-                printf("Option inconnue %c\n", optopt);
-                break;
-        }
-    }
 	read_file(&graph, &length, file_name);
 	adjacency_matrix_from_graph(&adjacency_matrix, graph, length);
     fill_init_vector(length, &vector);
